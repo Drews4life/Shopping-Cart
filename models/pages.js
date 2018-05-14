@@ -1,4 +1,6 @@
-const mongoose = require("mongoose");
+const {mongoose} = require("./../db/db");
+
+
 
 var PageSchema = new mongoose.Schema({
     title: {
@@ -19,4 +21,5 @@ var PageSchema = new mongoose.Schema({
 
 var Page = mongoose.model("Page", PageSchema);
 
-module.exports = Page;
+
+module.exports = {Page};

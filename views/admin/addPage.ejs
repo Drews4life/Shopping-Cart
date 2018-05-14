@@ -6,7 +6,7 @@
 <form method="post" action="/admin/pages/add-page">
     <div class="form-group">
         <label for="">Title</label>
-        <input type="text" class="form-control"  placeholder="Title" name="title" value="<%= title %>" autofocus required autocomplete="off">
+        <input type="text" class="form-control"  placeholder="Title" name="title" value="<%= title %>" autofocus  autocomplete="off">
     </div>
 
     <div class="form-group">
@@ -16,7 +16,7 @@
 
     <div class="form-group">
         <label for="">Content</label>
-        <textarea name="content" placeholder="content" class="form-control" cols="30" rows="10" required><%= content %></textarea>
+        <textarea name="content" placeholder="content" class="form-control" cols="30" rows="10" ><%= content %></textarea>
     </div>
 
     <button class="btn btn-default">Submit</button>
