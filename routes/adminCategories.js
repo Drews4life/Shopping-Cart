@@ -4,77 +4,60 @@ var {Category} = require("./../models/category");
 var router = express.Router();
 
 router.get("/", async(req, res) => {
-    res.send("Categs index");
-    // var pages = await Page.find({}).sort({sorting: 1});
-    // res.render("admin/pages",{
-    //     pages
-    // })
+    var categories = await Category.find({}).sort({sorting: 1});
+    res.render("admin/categories",{
+        categories
+    })
 })
 
-router.get("/add-page", (req, res) => {
-    var title;
-    var slug;
-    var content;
+router.get("/add-category", (req, res) => {
+    var title = "";
+    
 
-    res.render("admin/addPage", {
-        title,
-        slug,
-        content
-    });
+    res.render("admin/addCategory", {title});
 });
 
-router.post("/add-page", (req, res) => {
+router.post("/add-category", (req, res) => {
 
     req.checkBody("title", "Title can't be empty").notEmpty();
-    req.checkBody("content", "Content can't be empty").notEmpty();
 
     var title = req.body.title;
-    var slug = req.body.slug.replace(/\s+/g, "-").toLowerCase();
-    if(slug == "") {
-        slug = title.replace(/\s+/g, "-").toLowerCase();
-    }
-    var content = req.body.content;
+    var slug = title.replace(/\s+/g, "-").toLowerCase();
+   
     var errors = req.validationErrors();
     if(errors){
-        // return res.status(400).send({
-        //     errorMessage: "Bad input"
-        // });
+     
 
-        res.render("admin/addPage", {
+        res.render("admin/addCategory", {
             errors,
-            title,
-            slug,
-            content
+            title
         });
         
     } else {
   
-        Page.findOne({slug})
-        .then((page) => {
-            if(page){
+        Category.findOne({slug})
+        .then((categ) => {
+            if(categ){
               
-                req.flash("danger", "Page slug already exist, try another one");
-                return res.render("admin/addPage", {
+                req.flash("danger", "This category already exist, try another one");
+                return res.render("admin/addCategory", {
                     title,
-                    slug,
-                    content
+                    slug
                 });
             } else {
 
-                let newPage = new Page({
+                let newCategory = new Category({
                     title,
-                    slug,
-                    content,
-                    sorting: 100
+                    slug
                 });
                 
                 
-                newPage.save()
+                newCategory.save()
                 .then((result) => {
                     if(result) {
                         console.log("Saved huh");
-                        req.flash("success", "Page added.");
-                        res.redirect("/admin/pages"); 
+                        req.flash("success", "Category succesfully added.");
+                        res.redirect("/admin/categories"); 
                     } else {
                         return res.status(500).send({
                             errorMessage: "Internal error"
