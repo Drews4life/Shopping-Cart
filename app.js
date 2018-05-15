@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const pages = require("./routes/pages");
 const adminPages = require("./routes/adminPages");
+const adminCategories = require("./routes/adminCategories");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const expressValidator = require("express-validator");
@@ -20,9 +21,8 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(session({
     secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: true }
+    resave: true,
+    saveUninitialized: true
   }));
 app.use(expressValidator({
     errorFormatter: (param, msg, value) => {
@@ -48,6 +48,7 @@ app.use(function (req, res, next) {
 
 app.use("/", pages);
 app.use("/admin/pages", adminPages);
+app.use("/admin/categories", adminCategories);
 
 
 

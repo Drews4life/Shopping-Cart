@@ -1,13 +1,14 @@
 var express = require("express");
 var mongoose = require("mongoose");
-var {Page} = require("./../models/pages");
+var {Category} = require("./../models/category");
 var router = express.Router();
 
 router.get("/", async(req, res) => {
-    var pages = await Page.find({}).sort({sorting: 1});
-    res.render("admin/pages",{
-        pages
-    })
+    res.send("Categs index");
+    // var pages = await Page.find({}).sort({sorting: 1});
+    // res.render("admin/pages",{
+    //     pages
+    // })
 })
 
 router.get("/add-page", (req, res) => {
