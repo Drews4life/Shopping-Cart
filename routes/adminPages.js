@@ -57,36 +57,55 @@ router.post("/add-page", (req, res) => {
                     slug,
                     content
                 });
+            } else {
+
+                let newPage = new Page({
+                    title,
+                    slug,
+                    content,
+                    sorting: 100
+                });
+                
+                
+                newPage.save().then((result) => {
+                    if(result) {
+                        console.log("Saved huh");
+                        req.flash("success", "Page added.");
+                        res.redirect("/admin/pages"); 
+                    } else {
+                        return res.status(500).send({
+                            errorMessage: "Internal error"
+                        });
+                    }
+                }).catch((e) => console.log(e.message));
+                     
+
             }
         }).catch((e) => res.status(500).send({
             errorMessage: "Server error"
         }));
        
-        
-
-        let newPage = new Page({
-            title,
-            slug,
-            content,
-            sorting: 100
-        });
-        
-        
-        newPage.save().then((result) => {
-            if(result) {
-                console.log("Saved huh");
-                req.flash("success", "Page added.");
-                res.redirect("/admin/pages"); 
-            } else {
-                return res.status(500).send({
-                    errorMessage: "Internal error"
-                });
-            }
-        }).catch((e) => console.log(e.message));
-             
-        
     }
 
+});
+
+router.post("/reorder-pages", (req, res) => {
+    var ids = req.body["id[]"];
+    var count = 0;
+
+    for (let i = 0; i < ids.length; i++) {
+        var id = ids[i];
+        count++;
+        (function(count){
+
+            Page.findById(id).then((page) => {
+                page.sorting = count;
+                page.save();
+            }).catch((e) => console.log(e.message));
+            
+        })(count);
+    }
+       
 });
 
 
