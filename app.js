@@ -1,11 +1,14 @@
 const express = require("express");
 const path = require("path");
 const pages = require("./routes/pages");
-const adminPages = require("./routes/adminPages");
-const adminCategories = require("./routes/adminCategories");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const expressValidator = require("express-validator");
+const fileUpload = require("express-fileupload");
+
+const adminPages = require("./routes/adminPages");
+const adminCategories = require("./routes/adminCategories");
+const adminProducts = require("./routes/adminProducts");
 
 var app = express();
 var port = process.env.PORT || 3000;
@@ -16,6 +19,7 @@ app.set("view engine", "ejs");
 
 app.locals.errors = null;
 
+app.use(fileUpload()); 
 app.use(bodyParser.urlencoded({extended : false}));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
@@ -49,6 +53,7 @@ app.use(function (req, res, next) {
 app.use("/", pages);
 app.use("/admin/pages", adminPages);
 app.use("/admin/categories", adminCategories);
+app.use("/admin/products", adminProducts);
 
 
 
