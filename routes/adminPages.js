@@ -114,8 +114,8 @@ router.post("/reorder-pages", (req, res) => {
        
 });
 
-router.get("/edit-page/:slug", (req, res) => {
-   Page.findOne({slug: req.params.slug})
+router.get("/edit-page/:id", (req, res) => {
+   Page.findById(req.params.id)
    .then((page) => {
         if(!page){
             return res.status(404).send({
@@ -137,7 +137,7 @@ router.get("/edit-page/:slug", (req, res) => {
 
 });
 
-router.post("/edit-page/:slug", (req, res) => {
+router.post("/edit-page/:id", (req, res) => {
     
     req.checkBody("title", "Title can't be empty").notEmpty();
     req.checkBody("content", "Content can't be empty").notEmpty();
@@ -148,7 +148,7 @@ router.post("/edit-page/:slug", (req, res) => {
         slug = title.replace(/\s+/g, "-").toLowerCase();
     }
     var content = req.body.content;
-    var id = req.body.id;
+    var id = req.params.id;
     var errors = req.validationErrors();
     if(errors){
         res.render("admin/editPage", {

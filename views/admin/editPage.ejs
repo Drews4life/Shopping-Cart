@@ -3,7 +3,7 @@
 <a href="/admin/pages" class="btn btn-primary">Back to all pages</a>
 <br><br>
 
-<form method="post" action="/admin/pages/edit-page/<%= slug %>">
+<form method="post" action="/admin/pages/edit-page/<%= id %>">
     <div class="form-group">
         <label for="">Title</label>
         <input type="text" class="form-control"  placeholder="Title" name="title" value="<%= title %>" autofocus  autocomplete="off">
@@ -18,8 +18,6 @@
         <label for="">Content</label>
         <textarea name="content" id="ta" placeholder="content" class="form-control" cols="30" rows="10" ><%= content %></textarea>
     </div>
-
-    <input type="hidden" name="id" value="<%= id %>">
     <button class="btn btn-default">Save changes</button>
 </form>
 <%- include("../_layouts/adminfooter") %>

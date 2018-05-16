@@ -16,7 +16,7 @@
         <% categories.forEach(function(categ) { %>
             <tr>
                 <td><%= categ.title %></td>
-                <td><a href="/admin/categories/edit-category/<%= categ.slug %>">Edit</a></td>
+                <td><a href="/admin/categories/edit-category/<%= categ._id %>">Edit</a></td>
                 <td><a class="confirmDeletion" href="/admin/categories/delete-category/<%= categ._id %>">Delete</a></td>
             </tr>
         <% }); %>
